@@ -19,28 +19,40 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 
 	private final AdminService adminService;
-
+	
 	@GetMapping("/merchants")
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Object> viewMerchants() {
-		return adminService.getAllMerchants();
+	return adminService.getAllMerchants();
 	}
-
+	
 	@GetMapping("/customers")
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Object> viewCustomers() {
-		return adminService.getAllCustomers();
+	return adminService.getAllCustomers();
+	}
+	
+	@GetMapping("/products")
+	@PreAuthorize("hasRole('ADMIN')")
+	public Map<String, Object> viewProducts() {
+		return adminService.getAllProducts();
 	}
 
+	@PatchMapping("/products/approve/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public Map<String, Object> approveProduct(@PathVariable Long id) {
+		return adminService.approveProduct(id);
+	}
+	
 	@PatchMapping("/block/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Object> blockUser(@PathVariable Integer id) {
-		return adminService.blockUser(id);
+	return adminService.blockUser(id);
 	}
 	
 	@PatchMapping("/unblock/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public Map<String, Object> unblockUser(@PathVariable Integer id) {
-		return adminService.unblockUser(id);
+	return adminService.unblockUser(id);
 	}
 }

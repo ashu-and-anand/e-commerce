@@ -14,25 +14,39 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class ProductDao {
-	private final ProductRepository productRepository;
+private final ProductRepository productRepository;
 
-	public void save(Product product) {
-		productRepository.save(product);
-	}
+public void save(Product product) {
+productRepository.save(product);
+}
 
-	public List<Product> getMerchantProducts(Merchant merchant) {
-		List<Product> products = productRepository.findByMerchant(merchant);
+public List<Product> getMerchantProducts(Merchant merchant) {
+List<Product> products = productRepository.findByMerchant(merchant);
+if (products.isEmpty())
+throw new NoSuchElementException("No Products for Merchant : " + merchant.getName());
+else
+return products;
+}
+
+public Product getProductByIdAndMerchant(Long id, Merchant merchant) {
+		return productRepository.findByIdAndMerchant(id, merchant).orElseThrow(()->new NoSuchElementException("No Product Found with Id: "+id));
+		return productRepository.findByIdAndMerchant(id, merchant)
+				.orElseThrow(() -> new NoSuchElementException("No Product Found with Id: " + id));
+}
+
+public void delete(Product product) {
+productRepository.delete(product);
+}
+
+	public List<Product> getProducts() {
+		List<Product> products = productRepository.findAll();
 		if (products.isEmpty())
-			throw new NoSuchElementException("No Products for Merchant : " + merchant.getName());
+			throw new NoSuchElementException("No Products found");
 		else
 			return products;
 	}
 
-	public Product getProductByIdAndMerchant(Long id, Merchant merchant) {
-		return productRepository.findByIdAndMerchant(id, merchant).orElseThrow(()->new NoSuchElementException("No Product Found with Id: "+id));
-	}
-
-	public void delete(Product product) {
-		productRepository.delete(product);
+	public Product getProductById(Long id) {
+		return productRepository.findById(id).orElseThrow(()->new NoSuchElementException("No Product with Id: "+id));
 	}
 }

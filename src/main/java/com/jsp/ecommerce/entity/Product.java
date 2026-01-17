@@ -1,4 +1,5 @@
 package com.jsp.ecommerce.entity;
+ package com.jsp.ecommerce.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,25 +12,26 @@ import lombok.Data;
 @Entity
 @Data
 public class Product {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(nullable = false)
-	private String name;
-	@Column(nullable = false)
-	private String brand;
-	@Column(nullable = false)
-	private String category;
-	@Column(nullable = false)
-	private Double price;
-	@Column(nullable = false)
-	private String description;
-	@Column(nullable = false)
-	private Integer stock;
-	@Column(nullable = false)
-	private String size;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
+@Column(nullable = false)
+private String name;
+@Column(nullable = false)
+private String brand;
+@Column(nullable = false)
+private String category;
+@Column(nullable = false)
+private Double price;
+@Column(nullable = false)
+private String description;
+@Column(nullable = false)
+private Integer stock;
+@Column(nullable = false)
+private String size;
+	private boolean approved;
 
-	@ManyToOne
-	private Merchant merchant;
+@ManyToOne
+private Merchant merchant;
 
 }
